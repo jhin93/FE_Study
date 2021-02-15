@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="About" class="content">
+      <h1>About</h1>
+      <p>Custom Software Development Company</p>
+    </div>
+
+    <div id="Products" class="content">
+      <h1>Products</h1>
+      <p>Building tailored software to address critical needs of global enterprises.</p>
+    </div>
+
+    <div id="Technology" class="content">
+      <h1>Technology</h1>
+      <p>Machine Learning, Artificial Intelligent, Cloud Platform.</p>
+    </div>
+
+    <div id="Downloads" class="content">
+      <h1>Downloads</h1>
+      <p>You can download a free 10 days trial.</p>
+    </div>
+
+    <button id="default" class="tab" onclick="openMenu('About', this, 'tomato')">About</button>
+    <button class="tab" onclick="openMenu('Products', this, 'darkolivegreen')">Products</button>
+    <button class="tab" onclick="openMenu('Technology', this, 'dodgerblue')">Technology</button>
+    <button class="tab" onclick="openMenu('Downloads', this, 'orange')">Downloads</button>
+
+    <style type="text/css">
+    /* tab button */
+    .tab {
+        background-color: #555;
+        color: white;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 25%;
+    }
+
+    /* change background color when mouse over */
+    .tab:hover {
+        background-color: #777;
+    }
+
+    /* default content */
+    .content {
+        color: white;
+        display: none;
+        padding: 50px;
+        text-align: center;
+    }
+
+    /* Style each tab content individually */
+    #About { background-color: tomato; }
+    #Products { background-color: darkolivegreen; }
+    #Technology { background-color: dodgerblue; }
+    #Downloads { background-color: orange; }   
+    </style>
+
+    <ul>
+      <li>홈페이지 메인화면에서 사용할 수 있는 탭기반의 메뉴를 구현해 봅니다. 넓은 배너 영역이 있고 4개의 탭 메뉴를 선택하면 배너 영역의 색상과 내용이 변경되는 구조 입니다.</li>
+      <li>순수 html, css, javascript 만으로 구성. - 기본 html 코드는 제공.</li>
+      <li>실행되면 About 탭이 기본적으로 선택되어 보여지도록 함.</li>
+      <li>마우스가 탭위로 올라가면 탭 배경색이 변경되도록 함.</li>
+    </ul>
+
+    <script>
+
+    </script>
+
+    <img src="https://dinfree.com/assets/img/exam/js-q1.gif" width="500" />
+  </body>
+</html>

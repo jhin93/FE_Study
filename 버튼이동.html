@@ -1,0 +1,112 @@
+
+<style>
+.side01 { float:left; width:40%; background:gold; color:red; min-height:500px; overflow:auto; }
+.side02 { float:right; width:40%; background:gold; color:red; min-height:500px; overflow:auto; }
+
+.result { clear:both; }
+</style>
+
+<section class="side01" id="sideControll01">
+	<ul class="move1" id="move1">
+		<li><span>Item 01</span><button class="moveBtn" type="button"><span>우측이동</span></button></li>
+		<li><span>Item 02</span><button class="moveBtn" type="button"><span>우측이동</span></button></li>
+		<li><span>Item 03</span><button class="moveBtn" type="button"><span>우측이동</span></button></li>
+		<li><span>Item 04</span><button class="moveBtn" type="button"><span>우측이동</span></button></li>
+		<li><span>Item 05</span><button class="moveBtn" type="button"><span>우측이동</span></button></li>
+		<li><span>Item 06</span><button class="moveBtn" type="button"><span>우측이동</span></button></li>
+		<li><span>Item 07</span><button class="moveBtn" type="button"><span>우측이동</span></button></li>
+	</ul>
+</section>
+
+<section class="side02" id="sideControll02">
+	<ul class="move2" id="move2">
+		<li><span>sItem 01</span><button class="moveBtn" type="button" ><span>좌측이동</span></button></li>
+		<li><span>sItem 02</span><button class="moveBtn" type="button"><span>좌측이동</span></button></li>
+		<li><span>sItem 03</span><button class="moveBtn" type="button"><span>좌측이동</span></button></li>
+	</ul>
+
+</section>
+
+<!-- form 태그로 감싸고 input의 type이 submit일때 입력값을 엔터키로 넣는게 가능 -->
+<form class="result" id="nodeForm">
+	<label for="addItem">좌측에 노드 삽입</label>
+	<input type="text" id="addItem" />
+	<input type="submit" value="삽입하기 버튼" id="addBtn"/>
+</form>
+
+<script>
+
+//버튼 이동
+//querySelectorAll로 같은 클래스의 버튼들을 잡아챈다.
+var moveBtn = document.querySelectorAll(".moveBtn");
+
+function Moving(){
+	//버튼을 잡아챈다.
+	var li = this.parentNode
+	var ul = this.parentNode.parentNode
+	var ulid = this.parentNode.parentNode.id
+	if(ulid === "move1"){
+		// 좌측에 있을 경우 li(버튼을 포함한)를 좌측 ul태그에서 삭제
+		ul.removeChild(li)
+		// 우측 ul태그에 추가.
+		document.getElementById('move2').appendChild(li);
+	}else if(ulid === "move2"){
+		// 우측에 있을 경우 li(버튼을 포함한)를 우측 ul태그에서 삭제
+		ul.removeChild(li)
+		// 좌측 ul태그에 추가.
+		document.getElementById('move1').appendChild(li);
+	}
+}
+
+var moveBtnLength = moveBtn.length;
+for(var i = 0; i < moveBtnLength; i ++){
+	//for문을 돌고 난 이후에 클릭 이벤트가 발생하는 것이기 때문에, 클릭 직후 시점의 i는 전부 10이다.
+	//근데 for문은 0부터 9까지 돌기 때문에, moveBtn[10]이 존재하지 않는다. 존재하지 않는 것의 부모노드를 찾으니 undefined가 나오는것.
+	//내부의 함수에서 외부의 for문의 i를 참조하는 것은 좋지 않다. 대신 this를 쓰는 것을 추천.
+	moveBtn[i].addEventListener("click", Moving)
+}
+
+
+
+// 버튼 추가. 새로 만든 버튼엔 이벤트가 안걸려있기에 새로 함수를 걸어주어야 한다.
+function addNode(e) {
+	// form 태그는 기본적으로 submit을 하고 나면 페이지를 한번 전체 리셋하는 기본 기능이 있다.
+	// 이를 차단하는 문법이 preventDefault이다.
+	e.preventDefault();
+	// 노드를 추가할 변수를 선언한다. 우측 버튼 목록.
+	var targetNode = document.querySelector('#move1');
+	// 추가할 노드에 넣을 텍스트를 변수에 담는다.
+	var keyword = document.querySelector('#addItem').value;
+
+	//자식 노드(버튼)을 생성할 함수 선언.
+	function attatchNodes() {
+		// li 태그를 생성하고 변수에 담는다.
+		var node = document.createElement('li');
+		var button = document.createElement('button');
+		button.type = "button";
+		button.className = "moveBtn";
+		button.innerHTML = "<span>우측이동</span>";
+		button.addEventListener('click', Moving);
+		
+		// 생성한 li태그에 이미 만들어진 li태그의 설정을 부여한다. innerHTML은 
+		node.innerHTML = '<span>' + keyword + '</span>';
+		node.appendChild( button );
+
+		// 완성된 li태그를 버튼 리스트에 자식 노드로 추가한다.
+		targetNode.appendChild( node );
+
+
+	}
+	// 버튼 생성 함수 실행.
+	attatchNodes();
+}
+
+// form 태그에 addEventListener를 걸고 버튼을 눌러 submit하는 상황일 때, addNode 함수를 실행하도록 작성한다.
+document.querySelector('#nodeForm').addEventListener('submit', addNode);
+
+</script>
+
+<p>이동 시에는 제이쿼리의 .append를 활용해도 좋습니다. <br />
+(but) appendchild 라는 것을 구글 검색으로 찾아보면, jquery가 필요하진 않습니다.<br />
+이 예제는 실제로 2년차 퍼블리셔에게 js의 능력을 평가하는 지표로서 naver가 활용하였습니다.<br />
+다만 네이버 제시 예제보다 어렵습니다. 고고!</p>
